@@ -1,0 +1,84 @@
+<!doctype html>
+<html ng-app="mashApp">
+
+<head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body background="wanderlust.jpg"   style="font-family: Trebuchet MS;">
+<nav>
+    <div class="container-fluid">
+        <ul style="font-size:160%" class="nav navbar-nav navbar-right">
+            <li><a href="Index.html"><button type="button"><strong>Logout</strong></button></a></li>
+        </ul>
+    </div>
+</nav>
+<div>
+<h1 style="color:darkslategrey;" align="center">FourSquare Review API Search</h1>
+<div  ng-controller="vCtrl">
+    <div class="menu" id="SearchCon" align="center">
+        <div class = "input group input-group-lg" align="center" style="width: 50%">
+            <input type="text" id = "place" class = "form-control" placeholder="Enter Location" aria-describedby="basic-addon1" align="center">
+            <br>
+        </div>
+        <div class = "input group input-group-lg" align="center" style="width: 50%">
+            <input type="text" id = "filter" class = "form-control" placeholder="Enter choice" aria-describedby="basic-addon1" align="center">
+            <br>
+        </div>
+        <button class = "btn btn-primary btn-lg" id="btn_getReview" ng-click="getVenues()">Get Venues List</button>
+    </div>
+    <div style="color:darkslategrey;" id="venue" align="center">
+        <h2 style="text-align: center;"> Picked Venues by FourSquare Review API </h2>
+
+        <div ng-repeat="venue in venueList" style="align-content: center; font-size: x-large">
+            <a  href="" ng-click="getReviews(venue)">{{venue.name}}</a>
+        </div>
+    </div>
+
+    <div id="review" style="display:none; align-content: center" align="center" >
+        <p ng-model="ReviewWithSentiment">
+        <div class="panel panel-default">
+        <div class="panel panel-heading" align="center" style="width:30%">Sentiment Analysis Using Alchemy API</div>
+        <div class="panel panel-info"  align="center" style="width:30%">Most recent review: {{ReviewWithSentiment.reviewText}}</div>
+        <div class="panel panel-info"  align="center" style="width:30%">Sentiment Review: {{ReviewWithSentiment.sentiment}}</div>
+        <div class="panel panel-info"  align="center" style="width:30%">Sentiment Score: {{ReviewWithSentiment.score}}</div>
+        <div class="panel panel-footer"  align="center" style="width:30%">{{ReviewWithSentiment.reviewText}}</div>
+    </div>
+    </div>
+</div>
+</div>
+
+<hr/>
+
+<div align = 'center'>
+<h1 style="color:darkslategrey">Google Knowledge Graph Search API </h1>
+<input type="text" id="word" value="" style="width: 30%;height:30px;" placeholder="Enter your word">
+<input type="button" id="enter" value="Search" style="width: 80px;height: 30px;border-radius: 5px" /><br><br>
+<script>
+
+    $("#enter").click(function () {
+
+
+        var service_url = 'https://kgsearch.googleapis.com/v1/entities:search';
+        var params = {
+            'query': $("#word").val(),
+            'limit': 10,
+            'indent': true,
+            'key': 'AIzaSyC8eWHOTnGym3g5enmuDCFYk3tmyi-G0pI'
+        };
+        $.getJSON(service_url + '?callback=?', params, function (response) {
+            $.each(response.itemListElement, function (i, element) {
+                $('<div>', {text: element['result']['name']}).appendTo(document.body);
+            });
+        });
+    });
+</script>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+<script src="app.js"></script>
+</body>
+
+</html>

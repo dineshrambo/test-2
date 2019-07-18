@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="google-signin-client_id" content="253727449572-384d4h6v3glcocsaa5kak5k1mjb2m8fj.apps.googleusercontent.com">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <script src="script.js" type="text/javascript"></script>
+</head>
+<body background="sign.jpg"  ng-app="mashUp" ng-controller="mashController">
+<h1  style="color:floralwhite" align="center"> Welcome to Mashup Application!!</h1><br/><br/>
+<h3 style="color:floralwhite" align="center"> Sign in with your Google Account </h3>
+<div  align="center" id="mySign"></div>
+<script>
+    'use strict';
+    function onSiginigIn(googleUser) {
+        console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+        window.location = "Home.html";
+    }
+    function onReject(error) {
+        console.log(error);
+    }
+    function renderButton() {
+        gapi.signin2.render('mySign', {
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSiginigIn,
+            'onfailure': onReject
+        });
+    }
+</script>
+
+<script type="text/javascript" src="app.js"></script>
+<script type="text/javascript">
+    (function() {
+        var p = document.createElement('script');
+        p.type = 'text/javascript';
+        p.async=true;
+        p.src='https://apis.googlec.com/js/client.js?onload=onLoadFunction';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(p,s);
+    })();
+</script>
+
+</body>
+</html>
